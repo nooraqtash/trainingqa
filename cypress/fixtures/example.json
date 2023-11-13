@@ -1,0 +1,11 @@
+{
+  "firstName": "Noor",
+  "lastName": "Aqtash",
+  "zipCode": "19328",
+  "email": "nooraqtash1998@gmail.com",
+  "gender":"Female",
+  "productName":["Blackberry","Nokia Edge", "iphone X"],
+  "body": "Fixtures are a great way to mock data for responses to routes"
+
+  
+}
