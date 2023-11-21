@@ -6,12 +6,15 @@
   "scripts": {
     "test": "node_modules\\.bin\\cypress run",
     "headTest": "npm run test --  --headed",
-    "chromeTest":"npm run test -- --broswer chrome"
+    "chromeTest": "npm run test -- --broswer chrome"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.3.3",
     "cypress-iframe": "^1.0.1"
+  },
+  "dependencies": {
+    "typescript": "^5.3.2"
   }
 }
