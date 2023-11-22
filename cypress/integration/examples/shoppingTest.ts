@@ -3,47 +3,52 @@
 
 import { saucedemo } from "../pageObjects/sauceDemo";
 
-describe('shoppingTest', function () {
+
+let data1
+
+describe('shoppingTest', () => {
     before(function () {
         cy.fixture('example').then(function (data) {
             //intializing global variable to become accessible everywhere since we are using data from example.json
-            this.data = data;
+            data1 = data;
         });
     });
-    it('Testing the shopping procedure', function () {
-        cy.visit('https://www.saucedemo.com/v1/inventory.html');
+    it('Testing the shopping procedure', () => {
+        cy.visit(saucedemo.homepageURL);
 
         //adding the first and last items
-        saucedemo.getFirstItemButton().click();
-        saucedemo.getLastItemButton().click();
+        cy.get(saucedemo.firstItemButton).click()
+        cy.get(saucedemo.lastItemButton).click()
 
         //going to shopping cart
-        cy.get('#shopping_cart_container').click();
+        cy.get(saucedemo.shoppingCart).click();
 
         //checking if the items added are correct
-        saucedemo.correctItemCheck('#item_4_title_link > .inventory_item_name', 'Backpack');
-        saucedemo.correctItemCheck('#item_3_title_link > .inventory_item_name', 'T-Shirt');
+        cy.get(saucedemo.firstItemInCart).should('include.text','Backpack')
+        cy.get(saucedemo.lastItemInCart).should('include.text','T-Shirt')
+        
 
         //remove item from cart
-        saucedemo.removeFirstItem().click();
+        cy.get(saucedemo.removeButtonforFirstItem).click()
 
         //checking that it is removed without adding it to the page object
-        saucedemo.removeFirstItem().should('not.exist')
+        cy.get(saucedemo.firstItemInCart).should('not.exist')
 
         //check out 
-        cy.get('.btn_action').click();
+        cy.get(saucedemo.checkOutButton).click();
         //Filling in the details
 
-        saucedemo.fillInForm('[data-test="firstName"]', this.data.firstName);
-        saucedemo.fillInForm('[data-test="lastName"]', this.data.lastName);
-        saucedemo.fillInForm('[data-test="postalCode"]', this.data.zipCode);
-        cy.get('.btn_primary').click();
+        cy.get(saucedemo.firstNameField).type(data1.firstName)
+        cy.get(saucedemo.lastNameField).type(data1.lastName)
+        cy.get(saucedemo.postCodeField).type(data1.zipCode)
+        
+        cy.get(saucedemo.submitFormButton).click();
 
         //checking the overview then moving to the next page
-        cy.get('.subheader').should('include.text', 'Overview');
-        cy.get('.btn_action').click();
+        cy.get(saucedemo.overview).should('include.text', 'Overview');
+        cy.get(saucedemo.checkOutButton).click();
         
         //Checking the successful message text
-        cy.get('.complete-header').should('have.text', 'THANK YOU FOR YOUR ORDER');
+        cy.get(saucedemo.header).should('have.text', 'THANK YOU FOR YOUR ORDER');
     });
 });

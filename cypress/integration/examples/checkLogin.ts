@@ -1,33 +1,36 @@
 /// <reference types="Cypress" />
 
-import { login } from "../pageObjects/checkLogin"
+import { checkLogin } from "../pageObjects/checkLogin"
 
 
 describe('Checking Login',() => {
-    it('Successful Login',() => {
-        
-        cy.visit('https://www.saucedemo.com/v1/index.html')
+    beforeEach (()=>{
+        cy.visit(checkLogin.logInURL)
+    })
 
-        login.logInCredentials('standard_user','secret_sauce')
-        cy.get('#login-button').click()
+    
+    it('Successful Login',() => {
+
+        //successful user check
+        checkLogin.logIn(checkLogin.successCaseUser,checkLogin.correctPassword)
 
         // checking that user is redirected to the correct url
-        cy.url().should('eq','https://www.saucedemo.com/v1/inventory.html')
+        cy.url().should('eq',checkLogin.inventoryURL)
     })
     it('Invalid Credentials',() => {
-        cy.visit('https://saucedemo.com/')
+        
 
-        login.logInCredentials('error_user','wrong_password')
-        cy.get('[data-test="login-button"]').click()
+        checkLogin.logIn(checkLogin.invalidUser,checkLogin.invalidPassword)
+        
 
          // checking that the error message is correct
-        cy.get('[data-test="error"]').contains('Username and password do not match any user in this service')
+        cy.get(checkLogin.errorMessage).contains('Username and password do not match any user in this service')
     })
-    it('Locked account',() => {
-        cy.visit('https://www.saucedemo.com/v1/index.html')
+    it('Locked out account',() => {
+        
 
-        login.logInCredentials('locked_out_user','secret_sauce')
-        login.getLogInButton().click()
+        checkLogin.logIn(checkLogin.lockedOutUser,checkLogin.correctPassword)
+        
 
         // checking that the error message is correct
         cy.contains('[data-test="error"]', 'Sorry, this user has been locked out.')
