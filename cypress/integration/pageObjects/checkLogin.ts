@@ -1,8 +1,9 @@
 class CheckLogIn{
 
   //path
-  logInURL= 'https://www.saucedemo.com/v1/index.html ' 
-  inventoryURL= 'https://www.saucedemo.com/v1/inventory.html'
+  baseURL= 'https://www.saucedemo.com/'
+  logInURL= 'v1/index.html ' 
+  inventoryURL= 'v1/inventory.html'
 
     //variables
     username= '[data-test="username"]'
@@ -15,10 +16,8 @@ class CheckLogIn{
 
     correctPassword= 'secret_sauce'
     invalidPassword= 'wrong_password'
-    
 
     errorMessage='[data-test="error"]'
-    
 
      logIn(username, password)  { 
         cy.get(this.username).type(username)
@@ -26,4 +25,4 @@ class CheckLogIn{
         cy.get(this.logInButton).click()
      }
     }
-    export const checkLogin: CheckLogIn = new CheckLogIn();
+    export const loginPage: CheckLogIn = new CheckLogIn();

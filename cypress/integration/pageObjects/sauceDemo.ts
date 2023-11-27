@@ -1,7 +1,9 @@
-class SauceDemo{
+class SauceDemoPage{
 
     //path
-    homepageURL= 'https://www.saucedemo.com/v1/inventory.html'
+    baseURL= 'https://www.saucedemo.com'
+    homepageURL= '/v1/inventory.html'
+    
     //variables
     firstItemButton= ':nth-child(1) > .pricebar > .btn_primary';
     lastItemButton= ':nth-child(6) > .pricebar > .btn_primary'
@@ -17,6 +19,5 @@ class SauceDemo{
     overview= '.subheader'
     header= '.complete-header' 
     
-   
 }
-export const saucedemo: SauceDemo = new SauceDemo();
+export const saucedemoPage: SauceDemoPage = new SauceDemoPage();

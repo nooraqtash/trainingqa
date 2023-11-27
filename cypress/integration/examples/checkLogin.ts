@@ -1,39 +1,34 @@
 /// <reference types="Cypress" />
 
-import { checkLogin } from "../pageObjects/checkLogin"
+import { loginPage } from "../pageObjects/checkLogin"
 
 
 describe('Checking Login',() => {
-    beforeEach (()=>{
-        cy.visit(checkLogin.logInURL)
-    })
+    beforeEach (()=>{cy.visit(loginPage.baseURL+loginPage.logInURL) })
 
-    
     it('Successful Login',() => {
 
         //successful user check
-        checkLogin.logIn(checkLogin.successCaseUser,checkLogin.correctPassword)
+        loginPage.logIn(loginPage.successCaseUser,loginPage.correctPassword)
 
         // checking that user is redirected to the correct url
-        cy.url().should('eq',checkLogin.inventoryURL)
+        cy.url().should('eq',loginPage.baseURL+loginPage.inventoryURL)
     })
-    it('Invalid Credentials',() => {
-        
 
-        checkLogin.logIn(checkLogin.invalidUser,checkLogin.invalidPassword)
+    it('Should not be able to login with invalid credentials',() => {
         
-
+        loginPage.logIn(loginPage.invalidUser,loginPage.invalidPassword)
+        
          // checking that the error message is correct
-        cy.get(checkLogin.errorMessage).contains('Username and password do not match any user in this service')
+        cy.get(loginPage.errorMessage).contains('Username and password do not match any user in this service')
     })
-    it('Locked out account',() => {
+    
+    it('Should not be able to login with locked out account credentials ',() => {
         
-
-        checkLogin.logIn(checkLogin.lockedOutUser,checkLogin.correctPassword)
+        loginPage.logIn(loginPage.lockedOutUser,loginPage.correctPassword)
         
-
         // checking that the error message is correct
-        cy.contains('[data-test="error"]', 'Sorry, this user has been locked out.')
+        cy.contains(loginPage.errorMessage, 'Sorry, this user has been locked out.')
 
     })
 })
