@@ -2,7 +2,7 @@ class CheckLogIn{
 
   //path
   baseURL= 'https://www.saucedemo.com/'
-  logInURL= 'v1/index.html ' 
+  logInURL= 'v1/index.html '
   inventoryURL= 'v1/inventory.html'
 
     //variables
@@ -19,7 +19,7 @@ class CheckLogIn{
 
     errorMessage='[data-test="error"]'
 
-     logIn(username, password)  { 
+     logIn(username, password)  {
         cy.get(this.username).type(username)
         cy.get(this.password).type(password)
         cy.get(this.logInButton).click()

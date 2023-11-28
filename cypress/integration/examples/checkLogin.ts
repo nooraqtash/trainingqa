@@ -16,17 +16,17 @@ describe('Checking Login',() => {
     })
 
     it('Should not be able to login with invalid credentials',() => {
-        
+
         loginPage.logIn(loginPage.invalidUser,loginPage.invalidPassword)
-        
+
          // checking that the error message is correct
         cy.get(loginPage.errorMessage).contains('Username and password do not match any user in this service')
     })
-    
+
     it('Should not be able to login with locked out account credentials ',() => {
-        
+
         loginPage.logIn(loginPage.lockedOutUser,loginPage.correctPassword)
-        
+
         // checking that the error message is correct
         cy.contains(loginPage.errorMessage, 'Sorry, this user has been locked out.')
 
